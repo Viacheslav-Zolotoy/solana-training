@@ -8,12 +8,13 @@ function generatePublicKeyWithPrefix(prefix: string): {
 } {
   let attempts = 0;
   let publicKey = "";
+  const normalizedPrefix = prefix.toLowerCase();
 
   do {
     const keypair = Keypair.generate();
-    publicKey = keypair.publicKey.toString();
+    publicKey = keypair.publicKey.toString().toLowerCase();
     attempts++;
-  } while (!publicKey.startsWith(prefix));
+  } while (!publicKey.startsWith(normalizedPrefix));
 
   return { publicKey, attempts };
 }
@@ -32,7 +33,7 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-rl.question("Enter the desired prefix: ", (prefix) => {
+rl.question("Enter the desired prefix (case-insensitive): ", (prefix) => {
   // Виконання функції з вимірюванням часу
   const timeTaken = measureExecutionTime(() => {
     const result = generatePublicKeyWithPrefix(prefix);
