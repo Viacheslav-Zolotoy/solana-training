@@ -9,7 +9,10 @@ import {
 } from "@solana/web3.js";
 import { getExplorerLink } from "@solana-developers/helpers";
 // Yes, createCreate! We're making an instruction for createMetadataV3...
-import { createCreateMetadataAccountV3Instruction } from "@metaplex-foundation/mpl-token-metadata";
+import {
+  createCreateMetadataAccountV3Instruction,
+  createUpdateMetadataAccountV2Instruction,
+} from "@metaplex-foundation/mpl-token-metadata";
 
 let privateKey = process.env["SECRET_KEY"];
 if (privateKey === undefined) {
@@ -48,6 +51,7 @@ const [metadataPDA, _metadataBump] = PublicKey.findProgramAddressSync(
   TOKEN_METADATA_PROGRAM_ID
 );
 const transaction = new Transaction();
+//--// Creata metadata
 const createMetadataAccountInstruction =
   createCreateMetadataAccountV3Instruction(
     {
@@ -66,6 +70,25 @@ const createMetadataAccountInstruction =
     }
   );
 transaction.add(createMetadataAccountInstruction);
+
+//--//Update metadata
+// const updateMetadataAccountInstruction =
+//   createUpdateMetadataAccountV2Instruction(
+//     {
+//       metadata: metadataPDA,
+//       updateAuthority: sender.publicKey,
+//     },
+//     {
+//       updateMetadataAccountArgsV2: {
+//         data: metadataData,
+//         updateAuthority: sender.publicKey,
+//         primarySaleHappened: null,
+//         isMutable: true,
+//       },
+//     }
+//   );
+
+// transaction.add(updateMetadataAccountInstruction);
 
 await sendAndConfirmTransaction(connection, transaction, [sender]);
 

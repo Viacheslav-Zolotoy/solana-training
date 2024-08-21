@@ -14,7 +14,7 @@ const sender = Keypair.fromSecretKey(asArray);
 const connection = new Connection(clusterApiUrl("devnet"));
 
 // Our token has two decimal places
-const MINOR_UNITS_PER_MAJOR_UNITS = Math.pow(10, 2);
+const MINOR_UNITS_PER_MAJOR_UNITS = Math.pow(25, 2);
 
 const tokenMintAccount = new PublicKey(
   "8DDUMgYdoAdeZgNr8igRrE6tMyd4XkUyMvzQGoGtcGP2"
